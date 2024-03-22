@@ -1,11 +1,13 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { Timestamp } from "mongodb";
 import { HydratedDocument, Types, Document } from "mongoose"
 
 export type RecordDocument = HydratedDocument<RecordModel>;
 
 @Schema({ timestamps: true })
 export class RecordModel {
+    @Prop()
+    id: Types.ObjectId;
+
     @Prop()
     serviceName: string;
 
@@ -14,9 +16,6 @@ export class RecordModel {
 
     @Prop()
     password: string;
-
-    @Prop()
-    recordId: Types.ObjectId;
 }
 
 export const RecordSchema = SchemaFactory.createForClass(RecordModel);

@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './record/record.controller';
-import { AppService } from './record/record.service';
+import { RecordController } from './record/record.controller';
+import { RecordService } from './record/record.service';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { RecordModel, RecordSchema } from './record/record.model';
@@ -11,7 +11,7 @@ import { RecordModel, RecordSchema } from './record/record.model';
     MongooseModule.forRoot(process.env.MONGODB_URI),
     MongooseModule.forFeature([{ name: RecordModel.name, schema: RecordSchema }])
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [RecordController],
+  providers: [RecordService],
 })
 export class AppModule {}
