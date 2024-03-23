@@ -6,6 +6,8 @@ import { Model } from 'mongoose';
 import { UpdateRecordDto } from './dto/update-record.dto';
 import { UpdatePasswordDto } from './dto/update-pasword.dto';
 import * as generator from 'generate-password';
+import { PasswordOptions } from 'src/constants/password-options';
+//import { PasswordOptions } from 'src/constants/password-options';
 
 
 @Injectable()
@@ -30,33 +32,39 @@ export class RecordService {
      return await this.recordModel.findByIdAndDelete(id);
   }
 
-  async readRecords(): Promise<RecordModel[]> {
+  async readAllRecords(): Promise<RecordModel[]> {
     return await this.recordModel.find();
   }
 
+  async readRecordById(id: string): Promise<RecordModel> {
+    return await this.recordModel.findById(id);
+  }
+  
   async updateRecord(id: string, dto: UpdateRecordDto): Promise<RecordModel> {
-    this.updateRecordPassword(id, { "password": dto.password});
-    
+    if (dto.password){
+    this.updateRecordPassword(id);
+    }
+
     return await this.recordModel.findByIdAndUpdate(id, {
       serviceName: dto.serviceName,
       login: dto.login,
     });
   };
 
-  async updateRecordPassword(id: string, dto: UpdatePasswordDto): Promise<RecordModel> {
-    if (dto.password) {
-      return await this.recordModel.findByIdAndUpdate(id, {'password': this.passwordGenerator()});
+  async updateRecordPassword(id: string, dto?: UpdatePasswordDto): Promise<RecordModel> {
+    if (dto && dto.password) {
+      return await this.recordModel.findByIdAndUpdate(id, {'password': dto.password});
     } else {
-      return await this.recordModel.findById(id);
+      return await this.recordModel.findByIdAndUpdate(id, {'password': this.passwordGenerator()});
     }
   };
 
   private passwordGenerator(): string {
-    return generator.generate ({
-    length: 32,
+    return generator.generate({
+    length: PasswordOptions.LENGTH,
     numbers: true,
     symbols: true,
-    exclude: `'"${"`"}*=+-~/\|?_()[]{}.,;:<>`
+    exclude: PasswordOptions.EXCLUDED_SYMBOLS
     });
-  } 
-} 
+  }
+}
