@@ -8,4 +8,4 @@ async function bootstrap() {
   () => console.log(`Server started on port ${process.env.APP_PORT}`));
 };
 
-bootstrap();
+void bootstrap();

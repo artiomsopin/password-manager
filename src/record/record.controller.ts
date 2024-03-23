@@ -9,12 +9,14 @@ import {
   ValidationPipe, 
   Param,
   HttpException,
-  HttpStatus
+  HttpStatus,
+  Patch
 } from '@nestjs/common';
 import { RecordService } from './record.service';
 import { CreateRecordDto } from './dto/create-record.dto';
 import { RecordModel } from './record.model';
 import { UpdateRecordDto } from './dto/update-record.dto';
+import { UpdatePasswordDto } from './dto/update-pasword.dto';
 
 
 @Controller("record")
@@ -33,8 +35,21 @@ export class RecordController {
   }
 
   @Put("update/:id")
-  async updateRecord(@Param("id") id: string, @Body() updateRecordDto: UpdateRecordDto): Promise<RecordModel> {
-    return this.RecordService.updateRecord(id, updateRecordDto);
+  async updateRecord(@Param("id") id: string, @Body() updateRecordDto: UpdateRecordDto) {
+    try {
+    return await this.RecordService.updateRecord(id, updateRecordDto);
+    } catch (e) {    
+      throw new HttpException(e, HttpStatus.NOT_FOUND);
+    }
+  }
+
+  @Patch("update/password/:id")
+  async updatePasswordRecord(@Param("id") id: string, @Body() updatePasswordDto: UpdatePasswordDto) {
+    try {
+    return await this.RecordService.updateRecordPassword(id, updatePasswordDto);
+    } catch (e) {    
+      throw new HttpException(e, HttpStatus.NOT_FOUND);
+    }
   }
   
   @Delete("delete/servicename/:serviceName")
@@ -44,10 +59,10 @@ export class RecordController {
 
   @Delete("delete/:id")
   async deleteRecordById(@Param("id") id: string): Promise<RecordModel> {
-    const deletedRecord = await this.RecordService.deleteRecordById(id);
-    if (!deletedRecord) {
-      throw new HttpException('Record not found', HttpStatus.NOT_FOUND);
+    try {
+      return await this.RecordService.deleteRecordById(id);
+    } catch (e) {    
+      throw new HttpException(e, HttpStatus.NOT_FOUND);
     }
-    return deletedRecord;
   }
 }
