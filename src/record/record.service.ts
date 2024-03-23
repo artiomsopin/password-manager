@@ -5,6 +5,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { UpdateRecordDto } from './dto/update-record.dto';
 import { UpdatePasswordDto } from './dto/update-pasword.dto';
+import * as generator from 'generate-password';
+
 
 @Injectable()
 export class RecordService {
@@ -50,7 +52,11 @@ export class RecordService {
   };
 
   private passwordGenerator(): string {
-    return Math.random().toString(36).slice(2, 10);
-  }
+    return generator.generate ({
+    length: 32,
+    numbers: true,
+    symbols: true,
+    exclude: `'"${"`"}*=+-~/\|?_()[]{}.,;:<>`
+    });
+  } 
 } 
-
