@@ -29,9 +29,14 @@ export class RecordController {
     return await this.RecordService.createRecord(createRecordDto);
   }
 
-  @Get("read")
-  async readRecords(): Promise<RecordModel[]> {
-    return this.RecordService.readRecords();
+  @Get("read/all")
+  async readAllRecords(): Promise<RecordModel[]> {
+    return this.RecordService.readAllRecords();
+  }
+
+  @Get("read/:id")
+  async readRecordsById(@Param("id") id: string): Promise<RecordModel> {
+    return this.RecordService.readRecordById(id);
   }
 
   @Put("update/:id")
@@ -53,8 +58,12 @@ export class RecordController {
   }
   
   @Delete("delete/servicename/:serviceName")
-  async deleteRecordByServiceName(@Param("serviceName") serviceName: string): Promise<RecordModel | null> {
-    return await this.RecordService.deleteRecordByServiceName(serviceName);
+  async deleteRecordByServiceName(@Param("serviceName") serviceName: string): Promise<RecordModel> {
+    try {
+      return await this.RecordService.deleteRecordByServiceName(serviceName);
+    } catch (e) {    
+      throw new HttpException(e, HttpStatus.NOT_FOUND);
+    }
   }
 
   @Delete("delete/:id")

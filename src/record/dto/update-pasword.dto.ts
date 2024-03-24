@@ -1,6 +1,6 @@
-import { IsBoolean } from 'class-validator';
+import { IsString } from 'class-validator';
 
 export class UpdatePasswordDto {
-    @IsBoolean()
-    password: boolean;
+    @IsString()
+    password?: string;
 }

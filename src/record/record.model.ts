@@ -5,7 +5,7 @@ export type RecordDocument = HydratedDocument<RecordModel>;
 
 @Schema({ timestamps: true })
 export class RecordModel {
-    @Prop()
+    @Prop({ type: Types.ObjectId })
     id: Types.ObjectId;
 
     @Prop()
