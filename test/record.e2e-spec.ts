@@ -4,6 +4,7 @@ import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 import { CreateRecordDto } from 'src/record/dto/create-record.dto';
 import { disconnect } from 'mongoose';
+import { PasswordOptions } from 'src/constants/password-options';
 
 const testDto: CreateRecordDto = {
   serviceName: "testServiceName",

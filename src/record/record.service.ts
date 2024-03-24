@@ -1,3 +1,4 @@
+import { PasswordOptions } from '../constants/password-options';
 import { Injectable } from '@nestjs/common';
 import { CreateRecordDto } from './dto/create-record.dto';
 import { RecordModel } from './record.model';
@@ -6,8 +7,8 @@ import { Model } from 'mongoose';
 import { UpdateRecordDto } from './dto/update-record.dto';
 import { UpdatePasswordDto } from './dto/update-pasword.dto';
 import * as generator from 'generate-password';
-import { PasswordOptions } from 'src/constants/password-options';
-//import { PasswordOptions } from 'src/constants/password-options';
+
+
 
 
 @Injectable()
