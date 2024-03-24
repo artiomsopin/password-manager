@@ -5,11 +5,8 @@ import { RecordModel } from './record.model';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { UpdateRecordDto } from './dto/update-record.dto';
-import { UpdatePasswordDto } from './dto/update-pasword.dto';
+import { UpdatePasswordDto } from './dto/update-password.dto';
 import * as generator from 'generate-password';
-
-
-
 
 @Injectable()
 export class RecordService {

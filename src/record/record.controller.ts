@@ -16,7 +16,7 @@ import { RecordService } from './record.service';
 import { CreateRecordDto } from './dto/create-record.dto';
 import { RecordModel } from './record.model';
 import { UpdateRecordDto } from './dto/update-record.dto';
-import { UpdatePasswordDto } from './dto/update-pasword.dto';
+import { UpdatePasswordDto } from './dto/update-password.dto';
 
 
 @Controller("record")
@@ -57,7 +57,7 @@ export class RecordController {
     }
   }
   
-  @Delete("delete/servicename/:serviceName")
+  @Delete("delete/serviceName/:serviceName")
   async deleteRecordByServiceName(@Param("serviceName") serviceName: string): Promise<RecordModel> {
     try {
       return await this.RecordService.deleteRecordByServiceName(serviceName);
