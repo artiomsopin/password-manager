@@ -18,8 +18,8 @@ describe('RecordController (e2e)', () => {
     app = moduleFixture.createNestApplication();
     await app.init();
   });
-
-  it('should create new record and return 201: /api/v1/record/create (POST)', async () => {
+  
+  it('should create new record: /api/v1/record/create (POST)', async () => {
     return request(app.getHttpServer())
       .post('/record/create')
       .send(TestDto.CREATE_RECORD_DTO)
@@ -42,6 +42,12 @@ describe('RecordController (e2e)', () => {
       .expect(200);
   });
 
+  it('should fail to get record by id: /api/v1/record/read/:INCORRECT_ID (GET)', async () => {
+    return request(app.getHttpServer())
+      .get(`/record/read/INCORRECT_ID`)
+      .expect(404);
+  });
+
   it('should update record: /api/v1/record/update/:id (PUT)', async () => {
     return request(app.getHttpServer())
     .put(`/record/update/${createdRecordId}`)
@@ -62,6 +68,12 @@ describe('RecordController (e2e)', () => {
       .expect(200)
       .send(TestDto.UPDATE_WITHOUT_PASSWORD_DTO)
       .expect(200)
+  })
+
+  it('should fail to update password: /api/v1/record/update/password/:INCORRECT_ID (PATCH)', async () => {
+    return request(app.getHttpServer())
+      .patch(`/record/update/password/INCORRECT_ID`)
+      .expect(404)
   })
 
   it('should delete record by id: /api/v1/record/delete/:id (DELETE)', async () => {

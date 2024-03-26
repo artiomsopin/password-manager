@@ -1,5 +1,5 @@
 import { PasswordOptions } from '../constants/password-options';
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateRecordDto } from './dto/create-record.dto';
 import { RecordModel } from './record.model';
 import { InjectModel } from '@nestjs/mongoose';
@@ -39,8 +39,8 @@ export class RecordService {
   }
   
   async updateRecord(id: string, dto: UpdateRecordDto): Promise<RecordModel> {
-    if (dto.password){
-    this.updateRecordPassword(id);
+    if (dto.password) {
+      this.updateRecordPassword(id);
     }
 
     return await this.recordModel.findByIdAndUpdate(id, {
@@ -50,10 +50,14 @@ export class RecordService {
   };
 
   async updateRecordPassword(id: string, dto?: UpdatePasswordDto): Promise<RecordModel> {
+    try{
     if (dto && dto.password) {
       return await this.recordModel.findByIdAndUpdate(id, {'password': dto.password});
     } else {
       return await this.recordModel.findByIdAndUpdate(id, {'password': this.passwordGenerator()});
+    }
+    } catch (e) {
+      throw new HttpException(e, HttpStatus.NOT_FOUND);
     }
   };
 

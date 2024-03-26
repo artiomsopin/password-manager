@@ -31,12 +31,16 @@ export class RecordController {
 
   @Get("read/all")
   async readAllRecords(): Promise<RecordModel[]> {
-    return this.RecordService.readAllRecords();
+    return await this.RecordService.readAllRecords();
   }
 
   @Get("read/:id")
   async readRecordsById(@Param("id") id: string): Promise<RecordModel> {
-    return this.RecordService.readRecordById(id);
+    try {
+    return await this.RecordService.readRecordById(id);
+    } catch (e) {    
+      throw new HttpException(e, HttpStatus.NOT_FOUND);
+    }
   }
 
   @Put("update/:id")
