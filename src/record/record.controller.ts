@@ -46,7 +46,7 @@ export class RecordController {
   @Put("update/:id")
   async updateRecord(@Param("id") id: string, @Body() updateRecordDto: UpdateRecordDto) {
     try {
-    return await this.RecordService.updateRecord(id, updateRecordDto);
+      return await this.RecordService.updateRecord(id, updateRecordDto);
     } catch (e) {    
       throw new HttpException(e, HttpStatus.NOT_FOUND);
     }

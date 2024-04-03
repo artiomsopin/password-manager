@@ -27,7 +27,7 @@ export class RecordService {
   }
 
   async deleteRecordById(id: string): Promise<RecordModel> {
-     return await this.recordModel.findByIdAndDelete(id);
+    return await this.recordModel.findByIdAndDelete(id);
   }
 
   async readAllRecords(): Promise<RecordModel[]> {
@@ -40,9 +40,8 @@ export class RecordService {
   
   async updateRecord(id: string, dto: UpdateRecordDto): Promise<RecordModel> {
     if (dto.password) {
-      this.updateRecordPassword(id);
+      await this.updateRecordPassword(id);
     }
-
     return await this.recordModel.findByIdAndUpdate(id, {
       serviceName: dto.serviceName,
       login: dto.login,

@@ -2,11 +2,11 @@ import { IsBoolean, IsString, ValidateIf } from 'class-validator';
 
 export class UpdateRecordDto {
     @IsString()
-    serviceName?: string;
+    serviceName?: string | null;
     
     @IsString()
-    login?: string;
+    login?: string | null;
     
     @IsBoolean()
-    password?: boolean;
+    password?: boolean | null;
 }

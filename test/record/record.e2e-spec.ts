@@ -61,6 +61,19 @@ describe('RecordController (e2e)', () => {
     .expect(200)
   })
 
+  it('should fail to update record: /api/v1/record/update/:INCORRECT_ID (PUT)', async () => {
+    return request(app.getHttpServer())
+    .put(`/record/update/INCORRECT_ID`)
+    .send(TestDto.UPDATE_FULL_RECORD_DTO )
+    .expect(404)
+    .send(TestDto.UPDATE_SERVICE_NAME_RECORD_DTO)
+    .expect(404)
+    .send(TestDto.UPDATE_LOGIN_RECORD_DTO)
+    .expect(404)
+    .send(TestDto.NOT_UPDATE_PASSWORD_RECORD_DTO)
+    .expect(404)
+  })
+
   it('should update password: /api/v1/record/update/password/:id (PATCH)', async () => {
     return request(app.getHttpServer())
       .patch(`/record/update/password/${createdRecordId}`)
@@ -80,6 +93,12 @@ describe('RecordController (e2e)', () => {
     return request(app.getHttpServer())
       .delete(`/record/delete/${createdRecordId}`)
       .expect(200);
+  });
+
+  it('should fail to delete record by id: /api/v1/record/delete/:INCORRECT_ID (DELETE)', async () => {
+    return request(app.getHttpServer())
+      .delete(`/record/delete/INCORRECT_ID`)
+      .expect(404);
   });
 
   afterAll( () => {
