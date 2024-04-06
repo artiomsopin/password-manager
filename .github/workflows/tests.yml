@@ -18,5 +18,5 @@ jobs:
       - name: Start MongoDB
         run: docker-compose -f docker-compose.yml up -d
   
-      - name: Run end-to-end tests
-        run: npm run test:e2e
+      - name: Run unit tests
+        run: npm run test
