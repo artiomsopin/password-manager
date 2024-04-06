@@ -1,12 +1,25 @@
 name: tests
+
 on: [push]
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
       - name: Installing Dependencies
         run: npm ci
-      - name: Test
-        run: npm run test
+
+      - name: Create .env file
+        run: echo "APP_PORT=8080\nMONGODB_URI=mongodb://127.0.0.1:27017/password-manager?appName=mongosh+2.2.0\nENCRYPTION_KEY=CI_ENCRYPTION_KEY" > .env
+  
+      - name: Start MongoDB
+        run: docker-compose -f docker-compose.yml up -d
+  
+      - name: Wait for MongoDB to start
+        run: dockerize -wait tcp://localhost:27017 -timeout 1m
+  
+      - name: Run end-to-end tests
+        run: npm run test:e2e
