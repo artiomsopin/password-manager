@@ -19,7 +19,6 @@ import { UpdateRecordDto } from './dto/update-record.dto';
 import { UpdatePasswordDto } from './dto/update-password.dto';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
-@ApiBearerAuth()
 @ApiTags("Record")
 @Controller("record")
 export class RecordController {

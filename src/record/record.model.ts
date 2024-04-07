@@ -9,7 +9,7 @@ export class RecordModel {
     @ApiProperty( {example: "1", description: "Unique ID"})
     @Prop({ type: Types.ObjectId })
     id: Types.ObjectId;
-
+    
     @ApiProperty( {example: "google.com", description: "Service name"})
     @Prop()
     serviceName: string;

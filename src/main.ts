@@ -11,7 +11,6 @@ async function bootstrap() {
   .setDescription('The password manager API description')
   .setVersion("1.0")
   .addTag('Password Manager endpoints')
-  .addBearerAuth()
   .build()
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('/api/docs', app, document);

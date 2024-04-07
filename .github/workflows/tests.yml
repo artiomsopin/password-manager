@@ -15,8 +15,5 @@ jobs:
       - name: Move .env.ci to .env
         run: mv .env.ci .env
   
-      - name: Start MongoDB
-        run: docker-compose -f docker-compose.yml up -d
-  
       - name: Run unit tests
         run: npm run test
